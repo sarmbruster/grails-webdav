@@ -60,6 +60,20 @@ These service should be in the root package (aka no package declaration)
 If the plugin does not find your service class for a specific webdav share, it falls
  back and uses the net.sf.webdav.LocalFileSystemStore to expose a local directory to webdav.
 
+3) prevent Grails UrlMapping acting on Webdav-URLs: add an exlcude setting in your UrlMappings.groovy
+Example:
+     class UrlMappings {
+    static mappings = {
+      "/$controller/$action?/$id?"{
+	      constraints {
+			 // apply constraints here
+		  }
+	  }
+	  "500"(view:'/error')
+      static excludes = ["/webdav_folder1/*"]  // repeat this one for each of your webdav shares
+	}
+
+
 </description>
   <documentation>http://grails.org/Webdav+Plugin</documentation>
   <resources>
