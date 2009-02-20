@@ -7,5 +7,5 @@ class UrlMappings {
 	  }
 	  "500"(view:'/error')
 	}
-    static excludes = ["/webdavflat/*", "/webdavtree/*"]
+    static excludes = ["/webdavflat*", "/webdavtree*"]
 }                                             
