@@ -11,7 +11,9 @@ log4j = {
 	       'org.hibernate'
 
     debug   'net.sf',
-            'org.codehaus.groovy.grails.webdav'
+            'org.codehaus.groovy.grails.webdav' //,
+            //'org.codehaus.groovy.grails.plugins.springsecurity',
+            //'org.springframework.security'
 }
 // The following properties have been added by the Upgrade process...
 grails.views.default.codec="none" // none, html, base64
@@ -27,3 +29,6 @@ grails.webdav = [
         ],
 
 ]
+
+
+//log4j.logger.org.springframework.security='off,stdout'
