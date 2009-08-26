@@ -1,4 +1,4 @@
-<plugin name='webdav' version='0.1' grailsVersion='1.1-RC1 &gt; *'>
+<plugin name='webdav' version='0.2' grailsVersion='1.1.1 &gt; *'>
   <author>Stefan Armbruster</author>
   <authorEmail>stefan@armbruster-it.de</authorEmail>
   <title>Webdav plugin for grails</title>
@@ -77,10 +77,10 @@ Example:
 </description>
   <documentation>http://grails.org/Webdav+Plugin</documentation>
   <resources>
-    <resource>AbstractWebdavMapperService</resource>
-    <resource>DataSource</resource>
     <resource>Config</resource>
     <resource>UrlMappings</resource>
+    <resource>DataSource</resource>
+    <resource>AbstractWebdavMapperService</resource>
   </resources>
   <dependencies />
 </plugin>

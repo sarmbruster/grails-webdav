@@ -1,7 +1,7 @@
 import org.codehaus.groovy.grails.webdav.ContextWebdavServlet
 
 class WebdavGrailsPlugin {
-    def version = 0.1
+    def version = 0.2
     def dependsOn = [:]
 
     def author = "Stefan Armbruster"
@@ -115,7 +115,7 @@ Example:
     * modify web.xml
     * <ol>
     * <li>add a servlet for each webdav specification </li>
-    * <li>add a {@link GrailsOpenSessionInViewFilter} for the webdav servlets</li>
+    * <li>add a {@link org.codehaus.groovy.grails.orm.hibernate.support.GrailsOpenSessionInViewFilter} for the webdav servlets</li>
     * </ol
     */
     def doWithWebDescriptor = { xml ->
