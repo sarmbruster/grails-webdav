@@ -25,9 +25,7 @@ import java.security.Principal
 
 public class Transaction implements ITransaction {
     static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Transaction.class);
-    /**
-     * current not used anywhere
-     */
+
     Principal principal
 
     /**
@@ -35,8 +33,4 @@ public class Transaction implements ITransaction {
      */
     def cache = [:]
 
-    void setPrincipal(Principal p) {
-        log.error "Principal $p"
-        this.principal = p
-    }
 }
