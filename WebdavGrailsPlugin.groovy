@@ -23,8 +23,13 @@ Example 1:
     grails.webdav =  [
         webdav: [
                 url: '/webdav/*',
+                init: [
+                        rootpath: System.properties.'java.io.tmpdir',
+                        storeDebug: 1,
+                        'no-content-length-headers': 0,
+                        lazyFolderCreationOnPut: 0
+                ]
         ]
-    ]
     A webdav share with the internal name 'webdav' is accessible under http://localhost:8080/<app>/webdav
 
 Example 2:
@@ -47,10 +52,7 @@ Example 2:
      and webdav2 maps to http://localhost:8080/<app>/webdav_folder2. The third one provides
      some servlet init parameters.
 
-If you're fine with a single webdav folder mapping
-    webdav -> http://localhost:8080/<app>/webdav
-you don't have to do anything in Config.groovy - this is the plugin's default
-behaviour by convention.
+Buy default no webdav folder is enabled.
 
 2) implement a service class implementing WebdavMapper for each entry in your webdav configuration
 This class defines the contents of your webdav shares.
@@ -83,27 +85,9 @@ Example:
 
     // TODO: support onChange
 
-    // URL to the plugin's documentation
     def documentation = "http://grails.org/Webdav+Plugin"
-
     def watchedResources = ["file:./grails-app/conf/*Config.groovy"]
-
     def FILTER_NAME = "webdavFilter"
-
-    /**
-    * this config is used if nothing is specified in Config.groovy
-    */
-    def defaultConfig =  [
-        webdav: [
-                url: '/webdav/*',
-                init: [
-                        rootpath: System.properties.'java.io.tmpdir',
-                        storeDebug: 1,
-                        'no-content-length-headers': 0,
-                        lazyFolderCreationOnPut: 0
-                ]
-        ]
-    ]
 
     def doWithSpring = {
     }
@@ -120,28 +104,30 @@ Example:
     */
     def doWithWebDescriptor = { xml ->
 
-        appendToWebDescriptor( xml, 'filter', ['filter-name':FILTER_NAME, 'filter-class': org.codehaus.groovy.grails.orm.hibernate.support.GrailsOpenSessionInViewFilter.name])
+        def cfg = application.config.grails.webdav
+        if (cfg) {
+            appendToWebDescriptor( xml, 'filter', ['filter-name':FILTER_NAME, 'filter-class': org.codehaus.groovy.grails.orm.hibernate.support.GrailsOpenSessionInViewFilter.name])
+            cfg.each { servletName, config ->
+                log.debug "config: $servletName -> $config"
 
-        def cfg = application.config.grails.webdav ?: defaultConfig
-
-        cfg.each { servletName, config ->
-            log.debug "config: $servletName -> $config"
-
-            appendToWebDescriptor( xml, 'servlet', {
-                servlet {
-                    'servlet-name'(servletName)
-                    'servlet-class'(ContextWebdavServlet.name)
-                    'load-on-startup'(0)
-                    config.init.each { name, value ->
-                        'init-param' {
-                            'param-name'(name)
-                            'param-value'(value)
+                appendToWebDescriptor( xml, 'servlet', {
+                    servlet {
+                        'servlet-name'(servletName)
+                        'servlet-class'(ContextWebdavServlet.name)
+                        'load-on-startup'(0)
+                        config.init.each { name, value ->
+                            'init-param' {
+                                'param-name'(name)
+                                'param-value'(value)
+                            }
                         }
                     }
-                }
-            })
-            appendToWebDescriptor( xml, 'servlet-mapping', [ 'servlet-name':servletName, 'url-pattern': config.url])
-            appendToWebDescriptor( xml, 'filter-mapping', ['filter-name':FILTER_NAME, 'url-pattern': config.url])
+                })
+                appendToWebDescriptor( xml, 'servlet-mapping', [ 'servlet-name':servletName, 'url-pattern': config.url])
+                appendToWebDescriptor( xml, 'filter-mapping', ['filter-name':FILTER_NAME, 'url-pattern': config.url])
+            }
+        } else {
+            log.error("webdav disabled. Add 'grails.webdav' section to Config.groovy.")
         }
     }
 
