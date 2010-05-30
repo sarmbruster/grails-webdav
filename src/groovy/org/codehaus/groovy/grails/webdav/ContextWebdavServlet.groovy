@@ -70,7 +70,19 @@ public class ContextWebdavServlet extends WebdavServlet {
                 log.debug "request attr $it = ${req.getAttribute(it)}"
             }
         }
-        super.service(req, resp)
+
+        if (!req.pathInfo) {
+             log.debug "servletPath $req.servletPath"
+             log.debug "contextPath $req.contextPath"
+             log.debug "queryString $req.queryString"
+             log.debug "pathInfo $req.pathInfo"
+             log.info "pathTranslated $req.pathTranslated"
+             def redirect = "${req.contextPath}/${req.servletPath}/"
+             log.info "doing redirect to $redirect"
+             resp.sendRedirect(redirect)
+        } else {
+            super.service(req, resp)
+        }
     } 
 
 }
