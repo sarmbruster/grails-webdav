@@ -104,8 +104,9 @@ public class GrailsWebdavStore implements IWebdavStore {
 
     public void removeObject(ITransaction transaction, String uri) {
         log.debug "removeObject $uri"
-        WebdavFolderish obj = findObject(transaction.cache, uri)
-        obj.webdavRemove("parent")
+        childOperation('webdavRemove', transaction.cache, uri)
+//        WebdavFolderish obj = findObject(transaction.cache, uri)
+//        obj.webdavRemove("parent")
     }
 
     public StoredObject getStoredObject(ITransaction transaction, String uri) {

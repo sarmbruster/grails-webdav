@@ -1,3 +1,4 @@
+package org.codehaus.groovy.grails.webdav
 /* Copyright 2009-2009 Stefan Armbruster
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,13 +14,11 @@
  * limitations under the License.
  */
 
-import grails.test.*
-import org.codehaus.groovy.grails.webdav.WebdavObject
-import org.slf4j.LoggerFactory
 import org.codehaus.groovy.grails.webdav.WebdavFolderish
 import org.codehaus.groovy.grails.webdav.Folder
-import org.codehaus.groovy.grails.webdav.WebdavMapper
+
 import org.codehaus.groovy.grails.webdav.Leaf
+import org.codehaus.groovy.grails.webdav.AbstractWebdavMapperService
 
 class AbstractWebdavMapperServiceTests extends grails.test.GrailsUnitTestCase {
 
@@ -56,13 +55,3 @@ class AbstractWebdavMapperServiceTests extends grails.test.GrailsUnitTestCase {
     }
 }
 
-class HierarchicalTestMapper extends AbstractWebdavMapperService {
-
-    List<WebdavObject> rootWebdavObjects
-    def log = LoggerFactory.getLogger(HierarchicalTestMapper.class)
-
-    protected setupWebdavMethods() {
-        null
-    }
-
-}

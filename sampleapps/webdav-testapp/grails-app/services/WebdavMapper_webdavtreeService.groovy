@@ -2,6 +2,7 @@ import org.codehaus.groovy.grails.webdav.WebdavObject
 import org.codehaus.groovy.grails.webdav.WebdavLeafish
 import org.codehaus.groovy.grails.webdav.WebdavFolderish
 import org.apache.commons.io.IOUtils
+import org.codehaus.groovy.grails.webdav.AbstractWebdavMapperService
 
 /**
  * maps the Folder-FileObject part of the domain model to webdav

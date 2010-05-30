@@ -1,3 +1,4 @@
+package org.codehaus.groovy.grails.webdav
 /* Copyright 2009-2009 Stefan Armbruster
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
