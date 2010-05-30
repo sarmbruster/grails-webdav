@@ -1,7 +1,7 @@
 import org.codehaus.groovy.grails.webdav.ContextWebdavServlet
 
 class WebdavGrailsPlugin {
-    def version = 0.2
+    def version = 0.3
     def dependsOn = [:]
 
     def author = "Stefan Armbruster"
@@ -131,7 +131,7 @@ Example:
                 servlet {
                     'servlet-name'(servletName)
                     'servlet-class'(ContextWebdavServlet.name)
-                    'load-on-startup'()
+                    'load-on-startup'(0)
                     config.init.each { name, value ->
                         'init-param' {
                             'param-name'(name)
