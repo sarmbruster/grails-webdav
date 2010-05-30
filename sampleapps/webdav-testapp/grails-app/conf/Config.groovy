@@ -10,10 +10,10 @@ log4j = {
 	       'org.springframework',
 	       'org.hibernate'
 
-    debug   'net.sf',
-            'org.codehaus.groovy.grails.webdav' //,
+    debug   'org.codehaus.groovy.grails.webdav' //,
             //'org.codehaus.groovy.grails.plugins.springsecurity',
             //'org.springframework.security'
+    root.level = org.apache.log4j.Level.WARN
 }
 // The following properties have been added by the Upgrade process...
 grails.views.default.codec="none" // none, html, base64
