@@ -20,6 +20,7 @@ import net.sf.webdav.IWebdavStore
 import net.sf.webdav.StoredObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import net.sf.webdav.exceptions.WebdavException
 
 /**
  * Implement a {@link IWebdavStore} for a Grails application.
@@ -69,12 +70,17 @@ public class GrailsWebdavStore implements IWebdavStore {
     }
 
     private void childOperation(String methodName, def cache, String uri) {
+        log.error "uri: $uri"
         def path = uri.tokenize("/")
-        def parentPath = path[0..-2].join("/")  // first n-1 elements of folderUri
-        //if (!parentPath) parentPath="/"
-        def childName = path[-1]  // last element of folderUri
-        WebdavObject obj = findObject(cache, parentPath)
-        obj."$methodName"(childName)
+        if (path.size() > 1) {
+            def parentPath = path[0..-2].join("/")  // first n-1 elements of folderUri
+            //if (!parentPath) parentPath="/"
+            def childName = path[-1]  // last element of folderUri
+            WebdavObject obj = findObject(cache, parentPath)
+            obj."$methodName"(childName)
+        } else {
+            throw new WebdavException("could not perform child operation $methodName on $uri")
+        }
     }
 
 
@@ -105,8 +111,6 @@ public class GrailsWebdavStore implements IWebdavStore {
     public void removeObject(ITransaction transaction, String uri) {
         log.debug "removeObject $uri"
         childOperation('webdavRemove', transaction.cache, uri)
-//        WebdavFolderish obj = findObject(transaction.cache, uri)
-//        obj.webdavRemove("parent")
     }
 
     public StoredObject getStoredObject(ITransaction transaction, String uri) {

@@ -39,7 +39,7 @@ abstract class AbstractWebdavMapperService implements WebdavMapper, Initializing
 
         // walk down the tree
         def result = parts.inject(getRoot()) {WebdavFolderish res, String name ->
-            res.webdavChildren().find { it.webdavName() == name }
+            res?.webdavChildren()?.find { it.webdavName() == name }
         }
         log.info "result for path $path is $result"
         return result
