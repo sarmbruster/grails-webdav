@@ -138,4 +138,7 @@ public class GrailsWebdavStore implements IWebdavStore {
         }
         return result
     }
+
+    void destroy() {
+    }
 }
