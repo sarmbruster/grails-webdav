@@ -1,8 +1,8 @@
 import org.codehaus.groovy.grails.webdav.ContextWebdavServlet
 
 class WebdavGrailsPlugin {
-    def version = 0.3
-    def dependsOn = [:]
+    String version = '0.3.1'
+    String grailsVersion = '1.1 > *'
 
     def author = "Stefan Armbruster"
     def authorEmail = "stefan@armbruster-it.de"
