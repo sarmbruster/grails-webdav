@@ -31,16 +31,12 @@ import net.sf.webdav.exceptions.WebdavException
  */
 
 // TODO: support authentication
-// TODO: support dates (creation, modification)
 
 public class GrailsWebdavStore implements IWebdavStore {
 
     WebdavMapper mapper
-    
-    static Logger log = LoggerFactory.getLogger(GrailsWebdavStore.class);
 
-    Date lastModified = new Date()
-    Date created = new Date()
+    static Logger log = LoggerFactory.getLogger(GrailsWebdavStore.class);
 
     public ITransaction begin(Principal principal) {
         log.debug "begin"
@@ -120,7 +116,7 @@ public class GrailsWebdavStore implements IWebdavStore {
         if (obj) {
             def folderish = obj instanceof WebdavFolderish
             int length = folderish ? 0 : obj.webdavLength()
-            return new StoredObject(isFolder: folderish, lastModified:lastModified, creationDate: created, resourceLength: length)
+            return new StoredObject(isFolder: folderish, lastModified: obj.webdavLastModified(), creationDate: obj.webdavCreated(), resourceLength: length)
         } else {
             log.debug "returning null"
             return null

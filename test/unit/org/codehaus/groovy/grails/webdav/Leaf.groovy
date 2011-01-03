@@ -27,4 +27,12 @@ class Leaf implements WebdavLeafish {
     public String webdavName() {
         name
     }
+
+    Date webdavLastModified() {
+        new Date()
+    }
+
+    Date webdavCreated() {
+        new Date()
+    }
 }

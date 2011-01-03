@@ -21,6 +21,8 @@ class WebdavMapper_webdavflatService extends AbstractWebdavMapperService {
 
         def p = Person.metaClass
         p.webdavName << { name }
+        p.webdavCreated << { dateCreated }
+        p.webdavLastModified << { lastUpdated }
         p.webdavChildren << {
             images.collect {
                 ProxyGenerator.instantiateDelegate([WebdavLeafish], it)
@@ -37,6 +39,8 @@ class WebdavMapper_webdavflatService extends AbstractWebdavMapperService {
 
         def i = Image.metaClass
         i.webdavName << { name }
+        i.webdavCreated << { dateCreated }
+        i.webdavLastModified << { lastUpdated }
         i.webdavLength << { data?.size() }
         i.webdavReadData << {
             new ByteArrayInputStream(data) 

@@ -14,13 +14,9 @@ package org.codehaus.groovy.grails.webdav
  * limitations under the License.
  */
 
-import org.codehaus.groovy.grails.webdav.WebdavFolderish
-import org.codehaus.groovy.grails.webdav.Folder
+import grails.test.GrailsUnitTestCase
 
-import org.codehaus.groovy.grails.webdav.Leaf
-import org.codehaus.groovy.grails.webdav.AbstractWebdavMapperService
-
-class AbstractWebdavMapperServiceTests extends grails.test.GrailsUnitTestCase {
+class AbstractWebdavMapperServiceTests extends GrailsUnitTestCase {
 
     void testEmptyMapper() {
         def mapper = new HierarchicalTestMapper()

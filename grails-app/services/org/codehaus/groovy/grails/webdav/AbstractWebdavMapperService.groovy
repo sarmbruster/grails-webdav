@@ -28,6 +28,8 @@ abstract class AbstractWebdavMapperService implements WebdavMapper, Initializing
 
     boolean transactional = true
     static ROOT_NAME = "WEBDAV ROOT OBJECT"
+    Date rootCreated = new Date()
+    Date rootModified = new Date()
 
     /**
      * @see WebdavMapper#getWebdavObject(String)
@@ -56,8 +58,11 @@ abstract class AbstractWebdavMapperService implements WebdavMapper, Initializing
                 webdavCreateFolder: {String n -> createRootFolder(n) },
                 webdavCreateResource: {String n -> createRootFile(n) },
                 webdavRemove: {String n -> removeObject(n) },
-                webdavName: { ROOT_NAME },
-                toString: { ROOT_NAME }
+                webdavName: { -> ROOT_NAME },
+                toString: { -> ROOT_NAME },
+                webdavLastModified: { -> rootModified },
+                webdavCreated: { -> rootCreated},
+
         ] as WebdavFolderish
     }
 

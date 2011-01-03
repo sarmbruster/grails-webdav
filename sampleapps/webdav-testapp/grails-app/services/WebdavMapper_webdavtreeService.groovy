@@ -24,6 +24,8 @@ class WebdavMapper_webdavtreeService extends AbstractWebdavMapperService {
 
         def folder = Folder.metaClass
         folder.webdavName << { name }
+        folder.webdavCreated << { dateCreated }
+        folder.webdavLastModified << { lastUpdated }
         folder.webdavChildren << {
             def allChilds = []
             allChilds += folders.collect { ProxyGenerator.instantiateDelegate([WebdavFolderish], it) }
@@ -48,6 +50,8 @@ class WebdavMapper_webdavtreeService extends AbstractWebdavMapperService {
 
         def file = FileObject.metaClass
         file.webdavName << { name }
+        file.webdavCreated << { dateCreated }
+        file.webdavLastModified << { lastUpdated }
         file.webdavLength << { data?.size() }
         file.webdavReadData << {
             new ByteArrayInputStream(data)
@@ -56,5 +60,5 @@ class WebdavMapper_webdavtreeService extends AbstractWebdavMapperService {
             data = IOUtils.toByteArray(is)
             return webdavLength()
         }
-    }
+   }
 }

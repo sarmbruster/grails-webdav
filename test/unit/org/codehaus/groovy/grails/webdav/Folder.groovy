@@ -28,4 +28,12 @@ public class Folder implements WebdavFolderish {
     public String webdavName() {
         name
     }
+
+    Date webdavLastModified() {
+        new Date()
+    }
+
+    Date webdavCreated() {
+        new Date()
+    }
 }

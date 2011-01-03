@@ -2,6 +2,8 @@ class FileObject {
 
     byte[] data
     String name
+    Date dateCreated
+    Date lastUpdated
 
     static belongsTo = [folder:Folder]
 

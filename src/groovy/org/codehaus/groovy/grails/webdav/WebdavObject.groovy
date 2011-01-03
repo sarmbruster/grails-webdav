@@ -25,4 +25,12 @@ public abstract interface WebdavObject {
      * This way the client associates it with an XML Editor
      */
     String webdavName()
+    /**
+     * Last modified timestamp of the of the webdav object. Default is the current time.
+     */
+    Date webdavLastModified()
+    /**
+     * Creation timestamp of the of the webdav object. Default is the current time.
+     */
+    Date webdavCreated()
 }
