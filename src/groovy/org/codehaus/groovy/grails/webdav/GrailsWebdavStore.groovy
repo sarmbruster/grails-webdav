@@ -94,14 +94,20 @@ public class GrailsWebdavStore implements IWebdavStore {
 
     public String[] getChildrenNames(ITransaction transaction, String uri) {
         log.debug "getChildrenNames $uri"
-        WebdavFolderish obj = findObject(transaction.cache, uri)
-        obj.webdavChildren().collect { it.webdavName() }
+        WebdavObject obj = findObject(transaction.cache, uri)
+        if (obj instanceof WebdavFolderish) {
+            return obj.webdavChildren().collect { it.webdavName() }
+        }
+        return null
     }
 
     public long getResourceLength(ITransaction transaction, String path) {
         log.debug "getResourceLength $path"
-        WebdavLeafish leaf = findObject(transaction.cache, path)
-        return leaf.webdavLength()
+        WebdavObject obj = findObject(transaction.cache, path)
+        if (obj instanceof WebdavLeafish) {
+            return obj.webdavLength()
+        }
+        return 0
     }
 
     public void removeObject(ITransaction transaction, String uri) {
