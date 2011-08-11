@@ -74,6 +74,9 @@ public class GrailsWebdavStore implements IWebdavStore {
             def childName = path[-1]  // last element of folderUri
             WebdavObject obj = findObject(cache, parentPath)
             obj."$methodName"(childName)
+        } else if (path.size() == 1) {
+            WebdavObject obj = findObject(cache, "")
+            obj."$methodName"(path[0])
         } else {
             throw new WebdavException("could not perform child operation $methodName on $uri")
         }
@@ -136,7 +139,18 @@ public class GrailsWebdavStore implements IWebdavStore {
         WebdavObject result = cache[path]
         if (!result) {
             result = mapper.getWebdavObject(path)
-            if (result) cache[path] = result
+            if (result) {
+                cache[path] = result
+                // Add children to cache for recursiveParseProperties of the servlet
+                if (result instanceof WebdavFolderish) {
+                    if (path.charAt(path.length() - 1) != "/") {
+                        path += "/"
+                    }
+                    for (WebdavObject obj : result.webdavChildren()) {
+                        cache[path + obj.webdavName()] = obj
+                    }
+                }
+            }
         }
         return result
     }

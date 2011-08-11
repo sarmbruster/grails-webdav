@@ -77,7 +77,7 @@ public class ContextWebdavServlet extends WebdavServlet {
              log.debug "queryString $req.queryString"
              log.debug "pathInfo $req.pathInfo"
              log.info "pathTranslated $req.pathTranslated"
-             def redirect = "${req.contextPath}/${req.servletPath}/"
+             def redirect = "${req.contextPath.replaceAll('\\/+$', '')}/${req.servletPath.replaceAll('^\\/+', '')}/"
              log.info "doing redirect to $redirect"
              resp.sendRedirect(redirect)
         } else {
